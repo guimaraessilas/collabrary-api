@@ -71,5 +71,9 @@ server.post("/books", (req, res) => __awaiter(void 0, void 0, void 0, function* 
   const response = yield books_1.BooksController.create(req, res);
   return response.send();
 }));
+server.get("/books/:search", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+  const response = yield books_1.BooksController.search(req, res);
+  return response.send();
+}));
 exports.prismaClient = new client_1.PrismaClient();
 exports.default = server;

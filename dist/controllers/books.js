@@ -41,8 +41,7 @@ const server_1 = require("../server");
 
 exports.BooksController = {
   create: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    let data = req.body;
-    console.log(req.body);
+    const data = req.body;
     const book = yield server_1.prismaClient.books.findFirst({
       where: {
         FormattedKey: {
@@ -68,5 +67,58 @@ exports.BooksController = {
   findAll: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const bookList = yield server_1.prismaClient.books.findMany();
     return res.json(bookList);
+  }),
+  findById: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const {
+      id
+    } = req.params;
+    const book = yield server_1.prismaClient.books.findUnique({
+      where: {
+        id: Number(id)
+      }
+    });
+
+    if (book) {
+      return res.json(book);
+    } else {
+      return res.status(404).json({
+        message: 'Título não encontrado.'
+      });
+    }
+  }),
+  search: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const {
+      search
+    } = req.params;
+    console.log(search);
+    const searchResultList = yield server_1.prismaClient.books.findMany({
+      where: {
+        OR: [{
+          Title: {
+            contains: search
+          }
+        }, {
+          Subject: {
+            contains: search
+          }
+        }, {
+          AuthorsStr: {
+            contains: search
+          }
+        }, {
+          FormattedKey: {
+            equals: search
+          }
+        }]
+      }
+    });
+
+    if (searchResultList) {
+      return res.json(searchResultList);
+    } else {
+      return res.status(404).json({
+        message: 'Nenhum título encontrado.'
+      });
+    }
   })
 };

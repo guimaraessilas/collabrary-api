@@ -25,5 +25,10 @@ server.post("/books", async (req: Request, res: Response) => {
   return response.send();
 });
 
+server.get("/books/:search", async (req: Request, res: Response) => {
+  const response = await BooksController.search(req, res);
+  return response.send();
+});
+
 export const prismaClient = new PrismaClient();
 export default server;

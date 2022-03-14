@@ -7,12 +7,17 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-//CLEARDB_DATABASE_URL
-
 model books {
   id           Int     @id @default(autoincrement())
   Title        String  @db.VarChar(250)
   FormattedKey String  @db.VarChar(250)
   AuthorsStr   String? @db.VarChar(300)
   Subject      String? @db.VarChar(255)
+}
+
+model user {
+  id       Int    @id @default(autoincrement())
+  email    String @db.VarChar(300)
+  phone    String @db.VarChar(20)
+  password String @db.VarChar(50)
 }

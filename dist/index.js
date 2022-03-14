@@ -12,4 +12,4 @@ Object.defineProperty(exports, "__esModule", {
 
 const server_1 = __importDefault(require("./server"));
 
-server_1.default.listen(process.env.PORT || 5000);
+server_1.default.listen(5000);
